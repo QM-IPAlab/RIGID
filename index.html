@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RIGID | Relational Spatial Alignment for Vision-Language-Action Models</title>
+  <meta name="description" content="RIGID transfers 3D spatial knowledge to vision-language-action models through relational alignment, preserving representation capacity and improving robustness.">
+  <meta name="theme-color" content="#1976b9">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RIGID: Relational Spatial Alignment for Vision-Language-Action Models">
+  <meta property="og:description" content="Learning spatial relationships while preserving VLA representation capacity.">
+  <meta property="og:url" content="https://qm-ipalab.github.io/RIGID/">
+  <meta property="og:image" content="https://qm-ipalab.github.io/RIGID/static/images/figure-1-motivation.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://qm-ipalab.github.io/RIGID/">
+  <link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+<a class="skip-link" href="#motivation">Skip to content</a>
+<header class="hero">
+  <div class="container">
+    <p class="project-name">RIGID</p>
+    <h1>Relational Spatial Alignment for Vision-Language-Action Models</h1>
+    <div class="authors">
+      <span><a href="https://noone65536.github.io/">Chaoran Zhu</a><sup>1</sup></span>
+      <span><a href="https://hengyiwang.github.io/">Hengyi Wang</a><sup>2</sup></span>
+      <span><a href="https://lin3-cc.github.io/">Chenglin Cui</a><sup>1</sup></span>
+      <span>Yazhe Wan<sup>1</sup></span>
+      <span><a href="https://taeinkwon.com/">Taein Kwon</a><sup>3*</sup></span>
+      <span><a href="http://eecs.qmul.ac.uk/~coh/">Changjae Oh</a><sup>1*</sup></span>
+    </div>
+    <p class="affiliations"><sup>1</sup> Queen Mary University of London, United Kingdom<br>
+      <sup>2</sup> University College London, United Kingdom<br>
+      <sup>3</sup> VGG, University of Oxford, United Kingdom</p>
+    <p class="supervision">* Equal supervision and corresponding authors.</p>
+    <div class="publication-links">
+      <a class="button" href="static/papers/rigid.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H5v20h14V7zM14 2v5h5M8 12h8M8 16h8"/></svg>Paper</a>
+      <a class="button" href="https://github.com/QM-IPAlab/RIGID"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18"/></svg>Code</a>
+      <a class="button" href="#supplementary-video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 4 12 8-12 8z"/></svg>Video</a>
+    </div>
+  </div>
+</header>
+<nav class="section-nav" aria-label="Page sections"><div class="container">
+  <a href="#motivation">Motivation</a><a href="#abstract">Abstract</a><a href="#method">Method</a><a href="#results">Results</a><a href="#real-world">Real-world experiments</a>
+</div></nav>
+<main>
+<section id="motivation" aria-labelledby="motivation-title">
+  <div class="container">
+    <h2 id="motivation-title">Motivation</h2>
+    <p class="intro">Can we teach a VLA model 3D geometry while preserving its representation capacity?<br>
+      Direct feature alignment can collapse the VLA feature space.<br>
+      <strong>RIGID aligns spatial relationships to transfer geometry while preserving expressivity.</strong></p>
+    <figure>
+      <a href="static/images/figure-1-motivation.webp" aria-label="Open Figure 1 at full resolution"><img src="static/images/figure-1-motivation.webp" width="1600" height="656" fetchpriority="high" alt="Figure 1: point-wise alignment versus relational alignment, with stable and effective rank comparisons showing rank loss after direct alignment and rank preservation with RIGID."></a>
+      <figcaption><strong>Figure 1.</strong> Aligning pairwise relationships leaves the VLA free to retain its own feature basis. In the reported analysis, RIGID preserves stable and effective rank, while direct alignment reduces both.</figcaption>
+    </figure>
+  </div>
+</section>
+<section id="abstract" class="tinted" aria-labelledby="abstract-title">
+  <div class="container">
+    <h2 id="abstract-title">Abstract</h2>
+    <div class="abstract-copy"><p>Spatial understanding is essential for robotic manipulation. Existing methods transfer 3D knowledge to vision-language-action (VLA) models by directly aligning their features with a pretrained 3D foundation model. We observe that this alignment can act as low-rank regularization, reducing the VLA’s representation capacity. We introduce <strong>RIGID (Rotation-Invariant Geometry Distillation)</strong>, which aligns pairwise spatial relationships through single-view and cross-view attention. An optimal transport objective transfers geometric structure while allowing the VLA to retain its own feature basis. Experiments on LIBERO, LIBERO-Plus, our LIBERO-Probing benchmark, and real-world manipulation show improved spatial representations and robustness while preserving representation capacity. RIGID uses RGB observations at inference, without additional depth sensors.</p></div>
+  </div>
+</section>
+<section id="method" aria-labelledby="method-title">
+  <div class="container">
+    <h2 id="method-title">Method Overview</h2>
+    <p class="intro">Distill the geometry in <strong>how image patches relate to one another.</strong></p>
+    <figure>
+      <a href="static/images/figure-2-method.webp" aria-label="Open Figure 2 at full resolution"><img src="static/images/figure-2-method.webp" width="2400" height="1020" loading="lazy" alt="Figure 2: multi-view RGB inputs enter a VLA student and a frozen 3D teacher. Single-view and cross-view attention maps are aligned alongside action training."></a>
+      <figcaption><strong>Figure 2.</strong> RIGID aligns the VLA’s single-view and cross-view attention with a frozen 3D teacher. The VLA is adapted with LoRA and trained jointly with the action objective.</figcaption>
+    </figure>
+    <p class="method-copy">Single-view attention captures local spatial structure; cross-view attention captures correspondences across cameras. A geometry-aware <strong>optimal transport loss</strong> compares these attention distributions using distances between image patches. The underlying relational objective is invariant to orthogonal transformations <em>in feature space</em>, avoiding a fixed teacher feature basis.</p>
+  </div>
+</section>
+<section id="results" class="tinted" aria-labelledby="results-title">
+  <div class="container">
+    <h2 id="results-title">Experiment Results</h2>
+    <p class="intro">RIGID matches the best reported average on LIBERO at <strong>98.5%</strong> and reaches <strong>75.0%</strong> on LIBERO-Plus, improving on Spatial Forcing by <strong>4.7 percentage points</strong>.</p>
+    <div class="table-block"><div class="table-scroll" role="region" aria-label="Table 1: Results on LIBERO, scroll horizontally on small screens" tabindex="0"><table>
+<caption>Table 1. Results on LIBERO</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">Spatial</th><th scope="col">Object</th><th scope="col">Goal</th><th scope="col">Long</th><th scope="col">Average</th></tr></thead><tbody>
+<tr class="group"><th colspan="6" scope="rowgroup">2D VLA</th></tr>
+<tr><th scope="row">Diffusion Policy</th><td>78.3</td><td>92.5</td><td>68.3</td><td>50.5</td><td>72.4</td></tr>
+<tr><th scope="row">TraceVLA</th><td>84.6</td><td>85.2</td><td>75.1</td><td>54.1</td><td>74.8</td></tr>
+<tr><th scope="row">Octo</th><td>78.9</td><td>85.7</td><td>84.6</td><td>51.1</td><td>75.1</td></tr>
+<tr><th scope="row">OpenVLA</th><td>84.7</td><td>88.4</td><td>79.2</td><td>53.7</td><td>76.5</td></tr>
+<tr><th scope="row">Dita</th><td>84.2</td><td>96.3</td><td>85.4</td><td>63.8</td><td>82.4</td></tr>
+<tr><th scope="row">CoT-VLA</th><td>87.5</td><td>91.6</td><td>87.6</td><td>69.0</td><td>83.9</td></tr>
+<tr><th scope="row">π₀-FAST</th><td>96.4</td><td>96.8</td><td>88.6</td><td>60.2</td><td>85.5</td></tr>
+<tr><th scope="row">π₀</th><td>96.8</td><td>98.8</td><td>95.8</td><td>85.2</td><td>94.2</td></tr>
+<tr><th scope="row">UniVLA</th><td>96.5</td><td>96.8</td><td>95.6</td><td>92.0</td><td>95.2</td></tr>
+<tr><th scope="row">π₀.₅</th><td>98.8</td><td>98.2</td><td>98.0</td><td>92.4</td><td>96.9</td></tr>
+<tr><th scope="row">OpenVLA-OFT</th><td>97.6</td><td>98.4</td><td>97.9</td><td>94.5</td><td>97.1</td></tr>
+<tr class="group"><th colspan="6" scope="rowgroup">Explicit 3D VLA: with depth sensors</th></tr>
+<tr><th scope="row">SpatialVLA</th><td>88.2</td><td>89.9</td><td>78.6</td><td>55.5</td><td>78.1</td></tr>
+<tr><th scope="row">4D-VLA</th><td>88.9</td><td>95.2</td><td>90.9</td><td>79.1</td><td>88.6</td></tr>
+<tr><th scope="row">GeoVLA</th><td>98.4</td><td>99.0</td><td>96.6</td><td class="best">96.6</td><td>97.7</td></tr>
+<tr><th scope="row">3D-CAVLA</th><td>98.2</td><td class="best">99.8</td><td>98.2</td><td>96.1</td><td>98.1</td></tr>
+<tr class="group"><th colspan="6" scope="rowgroup">Implicit 3D VLA: RGB inputs only</th></tr>
+<tr><th scope="row">GLaD</th><td>95.2</td><td>95.4</td><td>91.9</td><td>87.5</td><td>92.5</td></tr>
+<tr><th scope="row">DreamVLA</th><td>97.5</td><td>94.0</td><td>89.5</td><td>89.5</td><td>92.6</td></tr>
+<tr><th scope="row">Spatial Forcing</th><td>99.4</td><td>99.6</td><td class="best">98.8</td><td>96.0</td><td class="best">98.5</td></tr>
+<tr class="ours"><th scope="row">RIGID (ours)</th><td class="best">99.6</td><td class="best">99.8</td><td>98.4</td><td>96.1</td><td class="best">98.5</td></tr>
+</tbody></table></div>
+      <p class="table-note">Success rates (%); higher is better. All entries are reproduced from Table 1. Bold numbers mark column-best results; blue rows highlight RIGID.</p>
+    </div>
+    <div class="table-block"><div class="table-scroll" role="region" aria-label="Table 2: Results on LIBERO-Plus, scroll horizontally on small screens" tabindex="0"><table>
+<caption>Table 2. Results on LIBERO-Plus</caption>
+<thead><tr><th scope="col">Method</th><th scope="col">Cam</th><th scope="col">Ro</th><th scope="col">Lang</th><th scope="col">Light</th><th scope="col">Back</th><th scope="col">Noise</th><th scope="col">Lay</th><th scope="col">Average</th></tr></thead><tbody>
+<tr class="group"><th colspan="9" scope="rowgroup">LIBERO-Spatial</th></tr>
+<tr><th scope="row">OpenVLA</th><td>88.3</td><td>40.0</td><td>80.5</td><td>98.3</td><td>97.3</td><td>96.3</td><td>93.9</td><td>84.0</td></tr>
+<tr><th scope="row">Spatial Forcing</th><td>70.2</td><td>43.4</td><td>87.1</td><td>99.3</td><td>97.7</td><td>88.9</td><td>95.1</td><td>82.3</td></tr>
+<tr class="ours"><th scope="row">RIGID (ours)</th><td>90.4</td><td>51.1</td><td>77.4</td><td>98.6</td><td>99.2</td><td>96.0</td><td>97.9</td><td>86.6</td></tr>
+<tr class="group"><th colspan="9" scope="rowgroup">LIBERO-Object</th></tr>
+<tr><th scope="row">OpenVLA</th><td>38.9</td><td>25.4</td><td>99.0</td><td>73.7</td><td>97.6</td><td>72.3</td><td>78.1</td><td>66.5</td></tr>
+<tr><th scope="row">Spatial Forcing</th><td>49.0</td><td>37.9</td><td>99.7</td><td>99.3</td><td>98.0</td><td>42.2</td><td>72.7</td><td>67.7</td></tr>
+<tr class="ours"><th scope="row">RIGID (ours)</th><td>49.0</td><td>37.2</td><td>98.3</td><td>97.6</td><td>100.0</td><td>82.5</td><td>73.2</td><td>74.3</td></tr>
+<tr class="group"><th colspan="9" scope="rowgroup">LIBERO-Goal</th></tr>
+<tr><th scope="row">OpenVLA</th><td>62.0</td><td>25.2</td><td>53.2</td><td>93.9</td><td>92.5</td><td>75.2</td><td>59.1</td><td>63.0</td></tr>
+<tr><th scope="row">Spatial Forcing</th><td>74.0</td><td>31.8</td><td>64.0</td><td>95.3</td><td>85.4</td><td>80.5</td><td>64.0</td><td>68.6</td></tr>
+<tr class="ours"><th scope="row">RIGID (ours)</th><td>74.6</td><td>50.6</td><td>57.8</td><td>90.7</td><td>88.6</td><td>82.6</td><td>67.3</td><td>71.1</td></tr>
+<tr class="group"><th colspan="9" scope="rowgroup">LIBERO-Long</th></tr>
+<tr><th scope="row">OpenVLA</th><td>38.7</td><td>38.2</td><td>87.0</td><td>89.4</td><td>86.8</td><td>63.5</td><td>76.9</td><td>66.4</td></tr>
+<tr><th scope="row">Spatial Forcing</th><td>34.1</td><td>35.9</td><td>89.9</td><td>78.5</td><td>83.7</td><td>55.0</td><td>84.3</td><td>63.2</td></tr>
+<tr class="ours"><th scope="row">RIGID (ours)</th><td>34.4</td><td>50.1</td><td>87.5</td><td>92.7</td><td>88.7</td><td>55.0</td><td>88.1</td><td>67.8</td></tr>
+<tr class="group"><th colspan="9" scope="rowgroup">All four suites</th></tr>
+<tr><th scope="row">OpenVLA-OFT</th><td>56.4</td><td>31.9</td><td>79.5</td><td>88.7</td><td>93.3</td><td>75.8</td><td>74.2</td><td>69.6</td></tr>
+<tr><th scope="row">π₀</th><td>13.8</td><td>6.0</td><td>58.8</td><td>85.0</td><td>81.4</td><td class="best">79.0</td><td>68.9</td><td>53.6</td></tr>
+<tr><th scope="row">Spatial Forcing</th><td>56.5</td><td>37.0</td><td class="best">84.6</td><td>93.3</td><td>90.8</td><td>65.1</td><td>78.3</td><td>70.3</td></tr>
+<tr class="ours"><th scope="row">RIGID (ours)</th><td class="best">62.1</td><td class="best">47.3</td><td>80.3</td><td class="best">94.9</td><td class="best">94.1</td><td class="best">79.0</td><td class="best">81.6</td><td class="best">75.0</td></tr>
+</tbody></table></div>
+      <p class="table-note">Success rates (%) under LIBERO-Plus perturbations, reproduced from Table 2. Cam: camera; Ro: robot; Lang: language; Light: lighting; Back: background; Noise: sensor noise; Lay: layout. Training uses LIBERO demonstrations, without LIBERO-Plus training data. Scroll horizontally on smaller screens.</p>
+    </div>
+  </div>
+</section>
+<section id="real-world" aria-labelledby="real-world-title">
+  <div class="container">
+    <h2 id="real-world-title">Real-world Experiments</h2>
+    <p class="intro">Six kitchen manipulation tasks on a Franka Emika Panda, using wrist and side-view RGB cameras. With a π₀ backbone, RIGID achieves the highest reported average success rate among the three evaluated methods.</p>
+    <figure>
+      <a href="static/images/figure-7-real-setup.webp" aria-label="Open Figure 7 at full resolution"><img src="static/images/figure-7-real-setup.webp" width="2397" height="791" loading="lazy" alt="Figure 7: Franka robot in a toy kitchen with side and wrist cameras, plus six tasks: placing a pot in the sink, opening a microwave, taking off a fork, stacking bowls, picking a block in a pan, and pouring water into the sink."></a>
+      <figcaption><strong>Figure 7.</strong> Robot setup and six tasks: (a) placing the pot in the sink, (b) opening the microwave, (c) taking off the fork, (d) stacking the bowls, (e) picking the block in the pan, and (f) pouring water into the sink. The agent-view camera is used only for visualization.</figcaption>
+    </figure>
+    <figure class="real-results">
+      <a href="static/images/figure-8-real-results.webp" aria-label="Open Figure 8 at full resolution"><img src="static/images/figure-8-real-results.webp" width="1450" height="394" loading="lazy" alt="Figure 8: success rates for π₀, Spatial Forcing, and RIGID on six tasks. For RIGID the rates are 10, 40, 90, 60, 90, and 90 percent. Displayed averages are 41, 55, and 62 percent, respectively."></a>
+      <figcaption><strong>Figure 8.</strong> Success rates across six tasks, with 10 trials per task per method. Picking the block in the pan reaches 90% with RIGID, compared with 70% for Spatial Forcing and 20% for π₀.</figcaption>
+    </figure>
+    <figure class="video-block" id="supplementary-video">
+      <video controls playsinline preload="metadata" aria-label="Supplementary video of real-world robot experiments" aria-describedby="video-description">
+        <source src="corl_26_sup_video%281%29.mp4" type="video/mp4">
+        Your browser does not support embedded video. <a href="corl_26_sup_video%281%29.mp4">Download the supplementary video</a>.
+      </video>
+      <figcaption class="video-caption" id="video-description"><span><strong>Supplementary video.</strong> Real-world manipulation demonstrations · 1 min 51 sec.</span><a href="corl_26_sup_video%281%29.mp4" download>Download video ↓</a></figcaption>
+    </figure>
+  </div>
+</section>
+</main>
+<footer><div class="container"><p>Page design follows <a href="https://qm-ipalab.github.io/LaVA-Man/">LaVA-Man</a> and the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a>, adapted from <a href="https://nerfies.github.io/">Nerfies</a>.</p></div></footer>
+</body>
+</html>
