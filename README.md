@@ -29,10 +29,10 @@ The content follows the supplied local manuscript in `../corl-2026-rigid`, with 
 | Motivation | Figure 1; Introduction; Method §3.1 | Three concise lines and the original two-panel figure |
 | Abstract | Abstract; Method; Simulation; Real-world experiments | Shortened, evidence-grounded abstract |
 | Method Overview | Figure 2; Method §3.2 | Original framework figure and attention/optimal-transport explanation |
-| Experiment Results | Tables 1 and 2 (`tables/libero_comb.tex`) | All 19 LIBERO and 16 LIBERO-Plus result rows, rendered as accessible HTML tables |
+| Experiment Results | Tables 1 and 2 (`tables/libero_comb.tex`) | Original tables cropped together from manuscript page 6, preserving all rows, typography, highlighting, and captions |
 | Real-world Experiments | Figures 7 and 8; Real-world experiments | Original setup/results figures and the supplied supplementary video |
 
-Figure 1 and Figure 8 are cropped from manuscript pages 2 and 9 to preserve the original LaTeX plots. Figures 2 and 7 are rendered from `imgs/framework.pdf` and `imgs/real_robot_setup2.pdf`. WebP images can be opened at full resolution by clicking them. `static/papers/rigid.pdf` is the supplied manuscript, including its supplement, copied unchanged. The original MP4 is also unchanged.
+Figure 1 and Figure 8 are cropped from manuscript pages 2 and 9 to preserve the original LaTeX plots. Tables 1 and 2 are cropped from page 6 and exported as a lossless WebP image without retypesetting. Figures 2 and 7 are rendered from `imgs/framework.pdf` and `imgs/real_robot_setup2.pdf`. WebP images can be opened at full resolution by clicking them. `static/papers/rigid.pdf` is the supplied manuscript, including its supplement, copied unchanged. The original MP4 is also unchanged.
 
 ## Editorial checks
 
