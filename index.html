@@ -70,13 +70,12 @@
       <a href="static/images/figure-2-method.webp" aria-label="Open Figure 2 at full resolution"><img src="static/images/figure-2-method.webp" width="2400" height="1020" loading="lazy" alt="Figure 2: multi-view RGB inputs enter a VLA student and a frozen 3D teacher. Single-view and cross-view attention maps are aligned alongside action training."></a>
       <figcaption><strong>Figure 2.</strong> RIGID aligns the VLA’s single-view and cross-view attention with a frozen 3D teacher. The VLA is adapted with LoRA and trained jointly with the action objective.</figcaption>
     </figure>
-    <p class="method-copy">Single-view attention captures local spatial structure; cross-view attention captures correspondences across cameras. A geometry-aware <strong>optimal transport loss</strong> compares these attention distributions using distances between image patches. The underlying relational objective is invariant to orthogonal transformations <em>in feature space</em>, avoiding a fixed teacher feature basis.</p>
   </div>
 </section>
 <section id="results" class="tinted" aria-labelledby="results-title">
   <div class="container">
     <h2 id="results-title">Experiment Results</h2>
-    <p class="intro">RIGID matches the best reported average on LIBERO at <strong>98.5%</strong> and reaches <strong>75.0%</strong> on LIBERO-Plus, improving on Spatial Forcing by <strong>4.7 percentage points</strong>.</p>
+    <p class="intro">RIGID matches the best reported average on LIBERO at <strong>98.5%</strong> and reaches <strong>75.0%</strong> on LIBERO-Plus.</p>
     <figure>
       <a href="static/images/tables-1-2-results.webp" aria-label="Open original Tables 1 and 2 at full resolution"><img src="static/images/tables-1-2-results.webp" width="1820" height="1140" loading="lazy" alt="Original Tables 1 and 2 from the paper: LIBERO and LIBERO-Plus success rates. RIGID achieves 98.5% and 75.0% average success, respectively."></a>
       <figcaption>Original results from the paper. Click the tables to view at full resolution.</figcaption>
