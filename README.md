@@ -27,8 +27,8 @@ The content follows the supplied local manuscript in `../corl-2026-rigid`, with 
 | Section | Source | Website treatment |
 | --- | --- | --- |
 | Motivation | Figure 1; Introduction; Method §3.1 | Three concise lines and the original two-panel figure |
-| Abstract | Abstract; Method; Simulation; Real-world experiments | Shortened, evidence-grounded abstract |
-| Method Overview | Figure 2; Method §3.2 | Original framework figure and attention/optimal-transport explanation |
+| Abstract | Abstract; Method; Simulation; Real-world experiments | Verbatim manuscript abstract (LaTeX comments excluded; whitespace normalized) |
+| Method Overview | Figure 2; Method §3.2 | Original framework figure and supplied attention-map description |
 | Experiment Results | Tables 1 and 2 (`tables/libero_comb.tex`) | Original tables cropped together from manuscript page 6, preserving all rows, typography, highlighting, and captions |
 | Real-world Experiments | Figures 7 and 8; Real-world experiments | Original setup/results figures and the supplied supplementary video |
 

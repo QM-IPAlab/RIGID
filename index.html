@@ -47,9 +47,9 @@
 <section id="motivation" aria-labelledby="motivation-title">
   <div class="container">
     <h2 id="motivation-title">Motivation</h2>
-    <p class="intro">Can we teach a VLA model 3D geometry while preserving its representation capacity?<br>
+    <p class="intro">Can we teach a VLA model spatial knowledge while preserving its representation capacity?<br>
       Direct feature alignment can collapse the VLA feature space.<br>
-      <strong>RIGID aligns spatial relationships to transfer geometry while preserving expressivity.</strong></p>
+      <strong>RIGID aligns spatial relationships to transfer spatial knowledge while preserving expressivity.</strong></p>
     <figure>
       <a href="static/images/figure-1-motivation.webp" aria-label="Open Figure 1 at full resolution"><img src="static/images/figure-1-motivation.webp" width="1600" height="656" fetchpriority="high" alt="Figure 1: point-wise alignment versus relational alignment, with stable and effective rank comparisons showing rank loss after direct alignment and rank preservation with RIGID."></a>
       <figcaption><strong>Figure 1.</strong> Aligning pairwise relationships leaves the VLA free to retain its own feature basis. In the reported analysis, RIGID preserves stable and effective rank, while direct alignment reduces both.</figcaption>
@@ -59,13 +59,13 @@
 <section id="abstract" class="tinted" aria-labelledby="abstract-title">
   <div class="container">
     <h2 id="abstract-title">Abstract</h2>
-    <div class="abstract-copy"><p>Spatial understanding is essential for robotic manipulation. Existing methods transfer 3D knowledge to vision-language-action (VLA) models by directly aligning their features with a pretrained 3D foundation model. We observe that this alignment can act as low-rank regularization, reducing the VLA’s representation capacity. We introduce <strong>RIGID (Rotation-Invariant Geometry Distillation)</strong>, which aligns pairwise spatial relationships through single-view and cross-view attention. An optimal transport objective transfers geometric structure while allowing the VLA to retain its own feature basis. Experiments on LIBERO, LIBERO-Plus, our LIBERO-Probing benchmark, and real-world manipulation show improved spatial representations and robustness while preserving representation capacity. RIGID uses RGB observations at inference, without additional depth sensors.</p></div>
+    <div class="abstract-copy"><p>Spatial understanding is essential for robots to perceive their surrounding environments and execute actions. Existing approaches typically encode 3D awareness into vision-language-action (VLA) models by directly aligning their representations with pre-trained 3D foundation models. However, we observe that such direct geometric feature alignment essentially exploits 3D foundation priors as a form of low-rank regularization in the feature space, resulting in severe rank collapse of the pre-trained VLA representations. In contrast, we shift the focus from enforcing point-wise equality to aligning pair-wise relationships. We propose a representation-alignment method that enables the injection of 3D spatial awareness without compromising the model's original expressivity. Extensive experiments on public benchmarks, our new spatial reasoning benchmark, and real-world manipulation scenarios demonstrate that our approach effectively incorporates 3D spatial representations into VLA reasoning, achieving robust performance and strong open-world generalization across diverse manipulation tasks.</p></div>
   </div>
 </section>
 <section id="method" aria-labelledby="method-title">
   <div class="container">
     <h2 id="method-title">Method Overview</h2>
-    <p class="intro">Distill the geometry in <strong>how image patches relate to one another.</strong></p>
+    <p class="intro">We extract self- and cross-attention (attn.) maps from both the VLA and the 3D foundation models to serve as relational affinity matrices.</p>
     <figure>
       <a href="static/images/figure-2-method.webp" aria-label="Open Figure 2 at full resolution"><img src="static/images/figure-2-method.webp" width="2400" height="1020" loading="lazy" alt="Figure 2: multi-view RGB inputs enter a VLA student and a frozen 3D teacher. Single-view and cross-view attention maps are aligned alongside action training."></a>
       <figcaption><strong>Figure 2.</strong> RIGID aligns the VLA’s single-view and cross-view attention with a frozen 3D teacher. The VLA is adapted with LoRA and trained jointly with the action objective.</figcaption>
